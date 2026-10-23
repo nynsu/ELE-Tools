@@ -1,0 +1,6 @@
+title: "Lançar\nFiação"
+tooltip: "Calcula a rota e preenche automaticamente os condutores nos eletrodutos a partir do quadro."
+author: "Nynsu"
+help_url: ""
+context:
+  - doc-project

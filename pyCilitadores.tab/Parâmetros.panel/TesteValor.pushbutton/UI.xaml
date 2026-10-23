@@ -1,0 +1,82 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Atualizador Avançado de Parâmetros (pyRevit)" Height="640" Width="480"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#F3F3F3">
+    
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 1. Categoria -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="1. Categoria dos elementos:" FontWeight="Bold" Margin="0,0,0,5" Foreground="#333333"/>
+            <ComboBox x:Name="cbCategories" Height="30" VerticalContentAlignment="Center" SelectionChanged="OnCategoryChanged"/>
+        </StackPanel>
+
+        <!-- 2. Modo de Operação (Copiar ou Texto Fixo) -->
+        <StackPanel Grid.Row="1" Margin="0,0,0,10">
+            <TextBlock Text="2. Modo de Atualização:" FontWeight="Bold" Margin="0,0,0,5" Foreground="#333333"/>
+            <StackPanel Orientation="Horizontal">
+                <RadioButton x:Name="rbCopyMode" Content="Copiar de Outro Parâmetro" IsChecked="True" Margin="0,0,20,0"/>
+                <RadioButton x:Name="rbTextMode" Content="Escrever Texto Fixo"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- 3. Painel de Origem (Alterna dinamicamente entre Cópia e Texto) -->
+        <Border Grid.Row="2" Background="#FFFFFF" Padding="10" CornerRadius="4" BorderBrush="#DDDDDD" BorderThickness="1" Margin="0,0,0,10">
+            <StackPanel>
+                <!-- Sub-painel para Modo Cópia -->
+                <StackPanel x:Name="pnlCopySource">
+                    <TextBlock Text="Parâmetro de Origem:" FontWeight="Bold" Margin="0,0,0,5" Foreground="#333333"/>
+                    <ComboBox x:Name="cbOriginType" Height="26" Margin="0,0,0,5" SelectionChanged="OnOriginTypeChanged">
+                        <ComboBoxItem Content="Instância"/>
+                        <ComboBoxItem Content="Tipo"/>
+                    </ComboBox>
+                    <ComboBox x:Name="cbOriginParam" Height="30" VerticalContentAlignment="Center" SelectionChanged="OnOriginParamChanged"/>
+                </StackPanel>
+
+                <!-- Sub-painel para Modo Texto Fixo -->
+                <StackPanel x:Name="pnlTextSource" Visibility="Collapsed">
+                    <TextBlock Text="Texto Personalizado a Inserir:" FontWeight="Bold" Margin="0,0,0,5" Foreground="#333333"/>
+                    <TextBox x:Name="txtCustomText" Height="30" VerticalContentAlignment="Center" Text=""/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- 4. Parâmetro de Destino (Saída) -->
+        <StackPanel Grid.Row="3" Margin="0,0,0,10">
+            <TextBlock Text="3. Parâmetro de Destino (Saída):" FontWeight="Bold" Margin="0,0,0,5" Foreground="#333333"/>
+            <ComboBox x:Name="cbTargetType" Height="26" Margin="0,0,0,5" SelectionChanged="OnTargetTypeChanged">
+                <ComboBoxItem Content="Instância"/>
+                <ComboBoxItem Content="Tipo"/>
+            </ComboBox>
+            <ComboBox x:Name="cbTargetParam" Height="30" VerticalContentAlignment="Center"/>
+        </StackPanel>
+
+        <!-- 5. Filtro opcional -->
+        <StackPanel Grid.Row="4" Margin="0,0,0,15">
+            <TextBlock Text="Filtro opcional (Nome da Família ou Tipo contendo):" FontWeight="Bold" Margin="0,0,0,5" Foreground="#333333"/>
+            <TextBox x:Name="TxtFiltro" Height="28" VerticalContentAlignment="Center" Text=""/>
+        </StackPanel>
+
+        <!-- Informação de Ajuda -->
+        <Border Grid.Row="5" Background="#E8F4FD" Padding="10" CornerRadius="4" Margin="0,0,0,15">
+            <TextBlock Text="Parâmetros restritos do sistema (fases, níveis, tipos, etc.) são bloqueados automaticamente para proteger a integridade do modelo." 
+                       TextWrapping="Wrap" Foreground="#005A9E" FontSize="12"/>
+        </Border>
+
+        <!-- Botões de Ação -->
+        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="BtnCancelar" Content="Cancelar" Width="90" Height="30" Margin="0,0,10,0" Click="cancel_click"/>
+            <Button x:Name="BtnExecutar" Content="Executar" Width="100" Height="30" Background="#007ACC" Foreground="White" FontWeight="Bold" Click="ExecuteClick"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,61 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Limpar / Modificar Parâmetro (pyRevit)" Height="610" Width="480"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#F3F3F3">
+    
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 1. Categoria -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="1. Categoria dos elementos:" FontWeight="Bold" Margin="0,0,0,5" Foreground="#333333"/>
+            <ComboBox x:Name="CmbCategories" Height="30" VerticalContentAlignment="Center"/>
+        </StackPanel>
+
+        <!-- 2. Parâmetro a Modificar -->
+        <StackPanel Grid.Row="1" Margin="0,0,0,10">
+            <TextBlock Text="2. Parâmetro Alvo:" FontWeight="Bold" Margin="0,0,0,5" Foreground="#333333"/>
+            <CheckBox x:Name="ChkIsType" Content="É um parâmetro de tipo?" Margin="0,0,0,5"/>
+            <ComboBox x:Name="CmbParam" Height="30" VerticalContentAlignment="Center"/>
+        </StackPanel>
+
+        <!-- 3. Tipo de Limpeza (Esvaziar Td vs Remover Texto Específico) -->
+        <StackPanel Grid.Row="2" Margin="0,0,0,10">
+            <TextBlock Text="3. Ação de Limpeza:" FontWeight="Bold" Margin="0,0,0,5" Foreground="#333333"/>
+            <ComboBox x:Name="CmbAcao" Height="30" VerticalContentAlignment="Center">
+                <ComboBoxItem Content="Esvaziar parâmetro inteiramente (apagar tudo)" IsSelected="True"/>
+                <ComboBoxItem Content="Remover um texto específico do parâmetro"/>
+            </ComboBox>
+        </StackPanel>
+
+        <!-- 4. Painel do Texto Específico (Fica visível só se a 2ª opção for escolhida) -->
+        <StackPanel x:Name="PanelTextoEspecifico" Grid.Row="3" Margin="0,0,0,10" Visibility="Collapsed">
+            <TextBlock Text="Texto exato a procurar e apagar:" FontWeight="Bold" Margin="0,0,0,3" Foreground="#333333"/>
+            <TextBox x:Name="TxtTextoApagar" Height="28" VerticalContentAlignment="Center" Text=""/>
+            <TextBlock Text="Ex: Se digitar 'janela', o script vai procurar e remover a palavra 'janela' do texto atual, mantendo o restante." 
+                       TextWrapping="Wrap" Foreground="#666666" FontSize="11" Margin="0,2,0,0"/>
+        </StackPanel>
+
+        <!-- 5. Filtro Opcional de Elementos -->
+        <StackPanel Grid.Row="4" Margin="0,0,0,10">
+            <TextBlock Text="5. Filtro opcional de elementos (Nome da Família/Tipo):" FontWeight="Bold" Margin="0,0,0,5" Foreground="#333333"/>
+            <TextBox x:Name="TxtFiltro" Height="28" VerticalContentAlignment="Center" Text=""/>
+            <TextBlock Text="Dica: Deixe em branco para afetar todos os elementos da categoria." 
+                       TextWrapping="Wrap" Foreground="#666666" FontSize="11" Margin="0,2,0,0"/>
+        </StackPanel>
+
+        <!-- Botões de Ação -->
+        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="BtnCancelar" Content="Cancelar" Width="90" Height="30" Margin="0,0,10,0"/>
+            <Button x:Name="BtnExecutar" Content="Executar" Width="100" Height="30" Background="#007ACC" Foreground="White" FontWeight="Bold"/>
+        </StackPanel>
+    </Grid>
+</Window>

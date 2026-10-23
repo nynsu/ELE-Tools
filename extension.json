@@ -1,0 +1,7 @@
+{
+    "name": "ELE-Tools",
+    "description": "Extensão de ferramentas elétricas para Autodesk Revit via pyRevit",
+    "author": "ELE-Team",
+    "version": "1.0.0",
+    "type": "extension"
+}

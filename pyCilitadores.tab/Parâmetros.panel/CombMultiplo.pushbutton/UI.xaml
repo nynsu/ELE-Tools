@@ -1,0 +1,120 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Combinação Múltipla - pyRevit" Height="780" Width="500"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Background="#F5F5F5">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Categoria -->
+            <RowDefinition Height="Auto"/> <!-- Nível de Filtro -->
+            <RowDefinition Height="Auto"/> <!-- Checkbox: Apenas Utilizados -->
+            <RowDefinition Height="120"/>   <!-- Lista Dinâmica de Seleção -->
+            <RowDefinition Height="Auto"/> <!-- Adicionar Parâmetro de Entrada -->
+            <RowDefinition Height="*"/>    <!-- Lista de Parâmetros Selecionados -->
+            <RowDefinition Height="Auto"/> <!-- Parâmetro de Saída -->
+            <RowDefinition Height="Auto"/> <!-- Botão -->
+        </Grid.RowDefinitions>
+
+        <!-- 1. Categoria -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="1. Categoria:" FontWeight="Bold" Margin="0,0,0,3"/>
+            <ComboBox x:Name="cbCategories" Height="26" SelectionChanged="OnCategoryChanged"/>
+        </StackPanel>
+
+        <!-- 2. Escolher o Nível de Filtragem -->
+        <StackPanel Grid.Row="1" Margin="0,0,0,5">
+            <TextBlock Text="2. Filtrar e Selecionar por:" FontWeight="Bold" Margin="0,0,0,3"/>
+            <ComboBox x:Name="cbFilterLevel" Height="26" SelectionChanged="OnFilterLevelChanged">
+                <ComboBoxItem Content="Categoria Inteira (Todos os elementos)"/>
+                <ComboBoxItem Content="Família (Múltipla Seleção)"/>
+                <ComboBoxItem Content="Tipo (Múltipla Seleção)"/>
+            </ComboBox>
+        </StackPanel>
+
+        <!-- Checkbox: Apenas Tipos Utilizados no Projeto -->
+        <CheckBox Grid.Row="2" x:Name="chkOnlyUsed" Content="Mostrar apenas itens/tipos utilizados no projeto" 
+                  VerticalContentAlignment="Center" Margin="0,0,0,10" FontWeight="Bold" Checked="OnOnlyUsedChanged" Unchecked="OnOnlyUsedChanged"/>
+
+        <!-- 3. Lista Dinâmica de Opções (Famílias ou Tipos) -->
+        <StackPanel Grid.Row="3" Margin="0,0,0,10">
+            <TextBlock x:Name="lblSelectionList" Text="3. Itens Disponíveis:" FontWeight="Bold" Margin="0,0,0,3"/>
+            <ListBox x:Name="lstSelectionItems" SelectionMode="Extended" Height="80" SelectionChanged="OnSelectionItemsChanged"/>
+        </StackPanel>
+
+        <!-- 4. Configurar Parâmetros de Entrada -->
+        <GroupBox Grid.Row="4" Header=" 4. Configurar Parâmetros de Entrada " FontWeight="Bold" Margin="0,0,0,10" Padding="8">
+            <StackPanel>
+                <Grid Margin="0,0,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                        <TextBlock Text="Tipo ou Instância:" FontSize="11" FontWeight="Normal"/>
+                        <ComboBox x:Name="cbInputParamType" Height="24" SelectionChanged="OnInputParamTypeChanged">
+                            <ComboBoxItem Content="Instância"/>
+                            <ComboBoxItem Content="Tipo"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                        <TextBlock Text="Parâmetro:" FontSize="11" FontWeight="Normal"/>
+                        <ComboBox x:Name="cbInputParam" Height="24"/>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Margin="0,0,0,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                        <TextBlock Text="Prefixo:" FontSize="11" FontWeight="Normal"/>
+                        <TextBox x:Name="txtPrefix" Height="24" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                        <TextBlock Text="Sufixo:" FontSize="11" FontWeight="Normal"/>
+                        <TextBox x:Name="txtSuffix" Height="24" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+
+                <Button x:Name="btnAddParam" Content="+ Adicionar Parâmetro à Combinação" Height="26" Click="AddParamClick" Background="#28A745" Foreground="White" FontWeight="Bold"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- 5. Lista de Parâmetros Adicionados -->
+        <GroupBox Grid.Row="5" Header=" 5. Sequência da Combinação " FontWeight="Bold" Margin="0,0,0,10" Padding="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ListBox x:Name="lstSelectedParams" Grid.Row="0" MinHeight="60" FontWeight="Normal"/>
+                <Button Grid.Row="1" x:Name="btnRemoveParam" Content="Remover Selecionado" Height="22" Width="140" HorizontalAlignment="Right" Margin="0,5,0,0" Click="RemoveParamClick" Background="#DC3545" Foreground="White" FontSize="11" FontWeight="Normal"/>
+            </Grid>
+        </GroupBox>
+
+        <!-- 6. Parâmetro de Saída -->
+        <GroupBox Grid.Row="6" Header=" 6. Parâmetro de Saída (Destino) " FontWeight="Bold" Margin="0,0,0,15" Padding="8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Margin="0,0,5,0">
+                    <TextBlock Text="Tipo ou Instância de Saída:" FontSize="11" FontWeight="Normal"/>
+                    <ComboBox x:Name="cbTargetType" Height="24" SelectionChanged="OnTargetTypeChanged">
+                        <ComboBoxItem Content="Instância"/>
+                        <ComboBoxItem Content="Tipo"/>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                    <TextBlock Text="Parâmetro de Destino:" FontSize="11" FontWeight="Normal"/>
+                    <ComboBox x:Name="cbTargetParam" Height="24"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+
+        <!-- Botão Executar -->
+        <Button Grid.Row="7" x:Name="btnRun" Content="Executar Combinação" Height="34" Width="160" HorizontalAlignment="Right" Click="ExecuteClick" Background="#007ACC" Foreground="White" FontWeight="Bold"/>
+    </Grid>
+</Window>

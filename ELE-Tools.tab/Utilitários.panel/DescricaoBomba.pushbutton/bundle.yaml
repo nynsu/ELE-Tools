@@ -1,0 +1,6 @@
+title: "Descrição\nBomba"
+tooltip: "Gera automaticamente o parâmetro 'Descrição do Material' da bomba selecionada."
+author: "Nynsu"
+help_url: ""
+context:
+  - doc-project

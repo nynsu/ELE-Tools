@@ -1,0 +1,55 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Enumerar e Taguear Elementos" Height="460" Width="420" 
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#F5F5F5">
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 1. Seleção por Categoria -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,15">
+            <TextBlock Text="1. Selecione a Categoria:" FontWeight="Bold" Margin="0,0,0,5"/>
+            <ComboBox x:Name="CmbCategories" Height="28"/>
+        </StackPanel>
+
+        <!-- 2. Tipo de Parâmetro -->
+        <TextBlock Grid.Row="1" Text="2. Escopo do Parâmetro:" FontWeight="Bold" Margin="0,0,0,5"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,15">
+            <RadioButton x:Name="RbTipo" Content="Tipo (Type)" IsChecked="True" Checked="ToggleParamType" Margin="0,0,30,0"/>
+            <RadioButton x:Name="RbInstancia" Content="Instância (Instance)" Checked="ToggleParamType"/>
+        </StackPanel>
+
+        <!-- 2.1 Nome do Parâmetro (Menu Suspenso Dinâmico) -->
+        <StackPanel Grid.Row="3" Margin="0,0,0,15">
+            <TextBlock Text="Parâmetro de Saída:" Margin="0,0,0,3"/>
+            <ComboBox x:Name="CmbParameters" Height="28" IsEditable="True"/>
+        </StackPanel>
+
+        <!-- 3. Prefixo / Sufixo -->
+        <StackPanel Grid.Row="4" Margin="0,0,0,15">
+            <TextBlock Text="3. Prefixo / Valor Inicial:" FontWeight="Bold" Margin="0,0,0,3"/>
+            <TextBox x:Name="TxtSufixo" Text="V" Height="28" VerticalContentAlignment="Center" Padding="5,0"/>
+        </StackPanel>
+
+        <!-- 4. Criar Tags -->
+        <StackPanel Grid.Row="5" Margin="0,0,0,15">
+            <CheckBox x:Name="ChkCreateTag" Content="4. Criar tags automaticamente para os elementos" FontWeight="Bold" Checked="ToggleTagPanel" Unchecked="ToggleTagPanel" Margin="0,0,0,5"/>
+            <StackPanel x:Name="PanelTag" Margin="20,0,0,0" IsEnabled="False">
+                <TextBlock Text="Selecione o Tipo de Tag:" Margin="0,0,0,3"/>
+                <ComboBox x:Name="CmbTags" Height="28"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Botão Executar -->
+        <Button Grid.Row="7" x:Name="BtnExecutar" Content="Executar" Height="35" Background="#007ACC" Foreground="White" FontWeight="Bold" Click="OnClickExecutar"/>
+    </Grid>
+</Window>
