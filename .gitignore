@@ -6,3 +6,6 @@ __pycache__/
 # pyRevit temp / cache
 *.log
 .temp/
+
+# Pastas e abas que nao devem subir pro ELE-Tools
+pyCilitadores.tab/
