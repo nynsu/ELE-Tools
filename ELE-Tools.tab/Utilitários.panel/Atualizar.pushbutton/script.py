@@ -27,6 +27,10 @@ def _garantir_icones():
         pass
 
 
+# Executa na importação para garantir que os ícones existam quando o pyRevit ler a pasta
+_garantir_icones()
+
+
 def encontrar_raiz_git():
     """Localiza a pasta raiz contendo o .git navegando para cima."""
     curr = os.path.dirname(os.path.abspath(__file__))
